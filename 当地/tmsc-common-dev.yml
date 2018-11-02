@@ -1,0 +1,5 @@
+tmsc: 
+  datasourceInterface: 
+    cache: 
+      interfaceCacheName: DATASOURCE_INTERFACES
+      moduleCacheName: DATASOURCE_INTERFACE_MODULES
