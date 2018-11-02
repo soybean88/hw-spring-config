@@ -1,0 +1,17 @@
+security: 
+  oauth2: 
+    client: 
+      clientId: client_id
+      clientSecret: client_secret
+      accessTokenUri: http://www.ptx.com:8080/auth/oauth/token
+      userAuthorizationUri: http://www.ptx.com:8080/auth/oauth/authorize
+      preEstablishedRedirectUri: http://www.ptx.com:8080/rest/sso/login
+      registeredRedirectUri: http://www.ptx.com:8080/rest/sso/login
+      useCurrentUri: false
+    sso: 
+      loginPath: http://www.ptx.com:8080/rest/sso/login
+    resource: 
+      id: rest_api
+      loadBalanced: true
+      userInfoUri: http://www.ptx.com:8080/auth/user
+      preferTokenInfo: false

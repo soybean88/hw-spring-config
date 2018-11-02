@@ -1,0 +1,211 @@
+server:
+  port: 6638
+  tomcat:
+   # Maximum amount of worker threads.
+    max-threads: 512
+     # Minimum amount of worker threads.
+    min-spare-threads: 64
+  connectionTimeout: 120000
+  # 配置cookie输出
+  #session: 
+    #cookie:   
+      #domain: ptx.com
+      #path: / #此处的path 设置为根目录， sso回调 host/login?code=xxx 酱紫的地址。
+    
+#HTTPS配置
+#  ssl: 
+#    key-store: d://key//ptx_test.pkcs12 #证书路径
+#    key-store-password: hwsoft #证书密码
+#    keyStoreType: PKCS12 #证书加密类型
+#    keyAlias: ptx_test #证书名称
+#    httpPort: 6637 #Http端口，当存在该配置中，启动HTTP端口监听HTTP请求，并将请求转向HTTPS  
+
+
+spring:
+  #限制文件大小
+  http:
+    multipart:
+      enabled: true
+      max-request-size: 10240Mb
+      max-file-size: 5120Mb
+      file-size-threshold: 0
+  application:
+    name: fw-gateway-server
+  redis: 
+    database: 0
+    host: 192.168.55.226
+    port: 6379
+    timeout: 0
+    password: redis
+    pool: 
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+zuul:
+  host:
+    #适用于ApacheHttpClient，如果是okhttp无效。每个服务的http客户端连接池最大连接，默认是200.
+    maxTotalConnections: 512
+    #适用于ApacheHttpClient，如果是okhttp无效。每个route可用的最大连接数，默认值是20。
+    #原则上一个服务只会配置一个路由
+    maxPerRouteConnections: 400
+  semaphore:
+    maxSemaphores: 600
+  add-proxy-headers: true
+  sensitiveHeaders: 
+  routes:
+    ##被代理的服务名，该服务必须也向注册中心注册
+    ##demoServer:
+      ##外部请求入口路径匹配
+      ##path: /rest/demoServer/**
+      ##strPrefix: false
+      ##url: http://127.0.0.1:8888/ 
+    fw-task-server: 
+      path: /rest/task/**
+      stripPrefix: false
+      serviceId: fw-task-server 
+    tmsc-sys-server: 
+      path: /rest/sys/**
+      stripPrefix: false
+      serviceId: tmsc-sys-server  
+    tmsc-auth-server: 
+      path: /auth/**
+      stripPrefix: false
+      serviceId: tmsc-auth-server
+    fw-sheet-rest: 
+      path: /rest/sheet/**
+      stripPrefix: false
+      serviceId: fw-sheet-rest   
+    #业务模块  
+    tmsc-basic-b-admin: 
+      path: /rest/basic/admin/**
+      stripPrefix: false
+      serviceId: tmsc-basic-b-admin
+    tmsc-basic-b-taxcontrol: 
+      path: /rest/basic/taxcontrol/**
+      stripPrefix: false
+      serviceId: tmsc-basic-b-taxcontrol
+    tmsc-input-b_inv: 
+      path: /rest/input/**
+      stripPrefix: false
+      serviceId: tmsc-input-b_inv 
+    tmsc-invoice-circulation: 
+      path: /rest/invoice/circulation/**
+      stripPrefix: false
+      serviceId: tmsc-invoice-circulation 
+    tmsc-declare-vat: 
+      path: /rest/declare/vat/**
+      stripPrefix: false
+      serviceId: tmsc-declare-vat
+    tmsc-declare-eint: 
+      path: /rest/declare/eint/**
+      stripPrefix: false
+      serviceId: tmsc-declare-eint
+    tmsc-declare-b-basic: 
+      path: /rest/declare/basic/**
+      stripPrefix: false
+      serviceId: tmsc-declare-b-basic
+    #工作流模块
+    tmsc-base-server: 
+      path: /rest/base/**
+      stripPrefix: false
+      serviceId: tmsc-base-server
+    #工作流临时数据
+    fw-temp-rest: 
+      path: /temp/**
+      stripPrefix: false
+      serviceId: fw-sheet-rest   
+    #呆账
+    tmsc-baddebt-evidence: 
+      path: /rest/baddebt/evidence/**
+      stripPrefix: false
+      serviceId: tmsc-baddebt-evidence
+    #呆账上传
+    tmsc-baddebt-evidence-upload: 
+      path: /zuul/rest/baddebt/evidence/**
+      stripPrefix: false
+      serviceId: tmsc-baddebt-evidence
+    baddebt-business-server: 
+      path: /rest/baddebt/business/**
+      stripPrefix: false
+      serviceId: baddebt-business-server
+    # 台账取数接口
+    tmsc-fetch-data: 
+      path: /rest/fetchdata/**
+      stripPrefix: false
+      serviceId: tmsc-fetch-data
+    #数据采集
+    tmsc-datacollection-server: 
+      path: /rest/datacollection/accouting/**
+      stripPrefix: false
+      serviceId: tmsc-datacollection-server
+    tmsc-business-account:
+      path: /rest/business/account/**
+      stripPrefix: false
+      serviceId: tmsc-business-account
+    # 加计扣除
+    tmsc-adddeduct-server:
+      path: /rest/adddeduct/**
+      stripPrefix: false
+      serviceId: tmsc-adddeduct-server
+    # 数据库日志
+    fw-log-server:
+      path: /rest/log/**
+      stripPrefix: false
+      serviceId: fw-log-server  
+                                                   
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            #30分钟
+            timeoutInMilliseconds: 1800000
+
+ribbon:
+  restclient:
+    enabled: true
+  # Connect timeout used by Apache HttpClient
+  #1.5分钟
+  ConnectTimeout: 60000
+  # Read timeout used by Apache HttpClient
+  #30分钟
+  ReadTimeout: 1800000
+  # 在同一个服务器上的最大重试数 (不包括第一次重试)
+  MaxAutoRetries: 1
+  # 最大重试服务器数量(不包括第一台服务器)
+  MaxAutoRetriesNextServer: 1
+  # 是否从源重新同步服务资源
+  OkToRetryOnAllOperations: false
+  # 从源重新同步服务资源的时间间隔
+  ServerListRefreshInterval: 2000
+  
+  
+# 此属性配置 起到移除响应头X-Application-Context
+management: 
+  add-application-context-header: false
+
+feign:
+  hystrix:
+    enabled: false
+    
+#security: 
+  #sessions: if_required
+
+#反响代理配置
+#这里的配置类似nginx的反响代理
+#当请求/api/**会直接交给listOfServers配置的服务器处理
+#当stripPrefix=true的时候 （http://127.0.0.1:8181/api/user/list -> http://192.168.1.100:8080/user/list）
+#当stripPrefix=false的时候（http://127.0.0.1:8181/api/user/list -> http://192.168.1.100:8080/api/user/list）
+#zuul.routes.api.path=/api/**
+#zuul.routes.api.stripPrefix=false
+#api.ribbon.listOfServers=192.168.1.100:8080,192.168.1.101:8080,192.168.1.102:8080
+
+#url重写配置
+#这里的配置，相当于访问/index/** 会直接渲染/home的请求内容(和直接请求/home效果一样), url地址不变
+#zuul.routes.index.path=/index/**
+#zuul.routes.index.url=forward:/home
+
+
