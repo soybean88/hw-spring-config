@@ -1,0 +1,6 @@
+#证据上传目录
+baddebt: 
+  evidence:
+    uploadRootPath: d:/baddebt_evidence
+    #上传单个文件、下载、打包的最大文件大小(Mb)
+    maxFileSize: 700

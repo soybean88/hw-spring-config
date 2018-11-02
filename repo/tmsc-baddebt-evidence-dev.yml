@@ -1,0 +1,45 @@
+# 系统模块数据库
+spring: 
+  datasource: 
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@192.168.55.226:1521:tms5db 
+    username: tms_user
+    password: hwsoft
+    initialSize: 5
+    minIdle: 5
+    maxActive: 50
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 'x'
+    testWhileIdle: true 
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 50
+    # filters: stat
+    connectionProperties: druid.stat.slowSqlMillis=5000;druid.stat.mergeSql=true
+    useGlobalDataSourceStat: true
+
+# boot: 
+#   fwHttpMessageConverter: 
+#     mediaTypes: multipart/form-data application/json;charset=UTF-8
+
+  http: 
+    multipart: 
+      maxFileSize: 5120Mb
+      maxRequestSize: 10240Mb
+    
+fw: 
+  swagger: 
+    enabled: false
+    #groups:
+    #  - name: "模块管理"
+    #    basepackage: com.spsoft.sys.module.controller
+    #  - name: "用户管理"
+    #    basepackage: com.spsoft.sys.user.controller
+    #  - name: "角色管理"
+    #    basepackage: com.spsoft.sys.role.controller
+  downloadPackageSize: 600 #用户批量下载打包上限大小
+    

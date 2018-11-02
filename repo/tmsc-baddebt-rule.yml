@@ -1,0 +1,4 @@
+baddebt: 
+  rule: 
+    scriptsdir: D:/rule_drl_scripts
+    droolsDateformat: yyyy-MM-dd

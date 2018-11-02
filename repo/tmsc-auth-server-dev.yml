@@ -1,0 +1,12 @@
+fw:
+  authServer:
+    loginPage: http://www.ptx.com:8080/login.html
+    loginUrl: /signIn
+    logoutUrl: /logout
+    permitAll: /health
+    loginSuccess: http://www.ptx.com:8080/rest/sso/login
+    #呆账登录入口
+    SSOLoginUrl: /baddebt/ssologin
+    #当在数据表中资源服务没有设置token时间的时候才能通过配置自定义token相关过期时间
+    accessTokenValidity: 1800
+    refreshTokenValidity: 1800

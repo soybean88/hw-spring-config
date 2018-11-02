@@ -1,0 +1,209 @@
+############# redis连接配置 #########################
+redisServerHost: 192.168.55.226
+redisServerPort: 6379
+redisServerPassword: redis
+############# 临时文件上传及下载目录配置 #############
+tempDownloadDirectoryPath: d:/tms5app/tmsc
+tempUploadDirectoryPath: d:/tms5app/tmsc
+tempExportExcelDirectoryPath: d:/tms5app/tmsc
+tempDownloadDirectoryName: fw_download_temp
+tempUploadDirectoryName: fw_upload_temp
+tempExportExcelDirectoryName: fw_exportexcel_temp
+############# 上传文件及模块文件保存目录 #############
+uploadSaveDirectoryPath: d:/tms5app/tmsc
+templateSaveDirectoryPath: d:/tms5app/tmsc
+uploadSaveDirectoryName: fw_upload
+templateSaveDirectoryName: fw_template
+############# elkIp ###############################
+elkServerIpAddress: 192.168.55.226
+###################################################
+
+#dataSource 数据源配置，目前设定是五个库五个数据源
+server:
+  tomcat:
+    max-threads: 256 # Maximum amount of worker threads.
+    min-spare-threads: 64 # Minimum amount of worker threads.
+  connectionTimeout: 100000
+  http:
+    multipart:
+      maxFileSize: 5000Mb
+      maxRequestSize: 5000Mb
+spring: 
+ redis: 
+  database: 0
+  host: ${redisServerHost}
+  port: ${redisServerPort}
+  timeout: 0
+  password: ${redisServerPassword}
+  pool: 
+   max-active: 8
+   max-wait: -1
+   max-idle: 8
+   min-idle: 0
+ #mongoDB 
+ #FwMongo.enabled是Mongo 的配置类启动的开关
+FwMongo:
+ enabled: false
+   
+endpoints:
+  heapdump: 
+    enabled: false 
+
+mongo: 
+  database: tms5db
+  host: 192.168.55.226
+  port: 27017
+  username: tms_user
+  password: hwsoft
+  
+# mybatis扫描配置，各个数据源根据库名声明文件目录
+mybatis: 
+ default: 
+  mapperLocations: classpath:mybatis/mapper/**/*.xml
+  dialect: oracle
+
+eureka: 
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 15      # 续约更新时间间隔（默认30秒）
+    lease-expiration-duration-in-seconds: 60
+
+# SECURITY OAUTH2 RESOURCES (ResourceServerProperties)
+# SECURITY OAUTH2 RESOURCES (ResourceServerProperties)
+security: 
+ #sessions: always
+ oauth2: 
+  resource: 
+   id: rest_api
+   #userInfoUri: http://www.ptx.com:8080/auth/user
+   #preferTokenInfo: false
+
+ribbon:
+  restclient:
+    enabled: true
+  # Connect timeout used by Apache HttpClient
+  #一分钟
+  ConnectTimeout: 60000
+  # Read timeout used by Apache HttpClient
+  #1分钟
+  ReadTimeout: 60000
+  # 在同一个服务器上的最大重试数 (不包括第一次重试)
+  MaxAutoRetries: 1
+  # 最大重试服务器数量(不包括第一台服务器)
+  MaxAutoRetriesNextServer: 1
+  # 是否从源重新同步服务资源
+  OkToRetryOnAllOperations: false
+  # 从源重新同步服务资源的时间间隔
+  ServerListRefreshInterval: 2000  
+
+feign:
+  hystrix:
+    enabled: false  
+    
+#SPSOFT 项目通用配置
+spsoft: 
+ auth: 
+  loginPage: ${fw.domain.homePage}/login.html
+  
+ 
+#上传、下载、导入、导出等临时目录 
+fw:
+  springMvcConverter:
+    strBlackList: true
+    strTrim: false
+  swagger:
+    enabled: true #启用swagger
+    title: "API列表" #标题
+    description: "请关注：http://www.powertax.com.cn" #描述
+    link: "http://www.powertax.com.cn" #链接地址
+    contact: "海闻科技" #联系人
+    version: "1.0" #版本
+  sms:
+    host: http://112.74.135.102:8081
+    username: "SDK-ZS-HWRJ"
+    password: "pwd"
+  logback:
+    appender:
+      elasticsearch:  #不区分日志类型，一旦配置了elasticsearch，控制台日志、调用日志、分事式事务日志均会输出到Elasticsearch
+        enable: true  #默认值为 "false"，当为"false"时，不开启日志直接输出到一旦配置了elasticsearch功能
+        cluster: #elasticsearch集群信息
+          node: ${elkServerIpAddress}:9300 #节点地址，多个节点用","隔开，格式：192.168.55.226:9300,192.168.55.227:9300
+          name: es-application   #集群名称，默认值为"es-application"
+        bulkProcessor:  #elasticsearch异步处理
+          actions: 5000   #每批处理的记录量 默认值为：5000
+          sizeMB: 5  #每批处理的消息量大小（MB）,默认值为：4
+          flushIntervalSeconds: 5 #每批处理的时间间隔（秒）,默认值为：4
+          concurrentRequests: 1 #并发处理数量（0为只有一个线程在处理） 默认值为：1
+          awaitCloseMilliSeconds: 15000 #关闭时等待所有队列处理完成的最大毫秒数 默认值为：10000
+        index: # 索引相关
+          namePostfix: development
+          dateFormat: yyyy-MM-dd
+      callLog:  #调用日志
+        kafka:
+          topic: fw_log_call_dev   #默认值为：fw_log_call_dev
+          bootstrap: none  #当值为none时，视为不启用调用日志Kafka输出，默认值为：none
+      sysLog:  #系统日志
+        kafka:
+          topic: fw_log_sys_dev    #默认值为：fw_log_sys_dev
+          bootstrap: none  #当值为none时，视为不启用系统日志Kafka输出，默认值为：none
+      db: 
+        ds: 
+          driverClassName: oracle.jdbc.driver.OracleDriver
+          url: jdbc:oracle:thin:@192.168.55.226:1521:tms5db
+          username: tms_log
+          password: hwsoft
+          initialSize: 3
+          minIdle: 3
+          maxActive: 20
+          maxWait: 60000
+          timeBetweenEvictionRunsMillis: 60000
+          minEvictableIdleTimeMillis: 300000
+          validationQuery: SELECT 'x' from dual
+          testWhileIdle: true
+          testOnBorrow: false
+          testOnReturn: false
+          poolPreparedStatements: true
+          maxPoolPreparedStatementPerConnectionSize: 20
+          connectionProperties: druid.stat.slowSqlMillis=5000;druid.stat.mergeSql=true
+          useGlobalDataSourceStat: true
+    logger:
+      root:
+        sendToFile: true #是否将控制台日志输出到文件 默认值为"false"
+        fileMax: 3 #最多保留文件个数，一天一个日志文件
+        fileDir: ./log #日志输出文件目录地址 默认值为"./log"
+        level: INFO  #日志级别 默认值为：INFO
+        sendToDB: false #是否将日志发送到数据库
+      comSpsoft: #Mybatis SQL打印需该包路径的日志级别为Debug才会打印
+        level: DEBUG  #日志级别 默认值为：DEBUG
+      comSpsoftCommonLogLogAOP: #日志处理切面，正常情况下无需修改该级别
+        level: INFO  #日志级别，此项正常不需修改，若修改将影响调用日志的输出、采集 默认值为：INFO
+  tempdir:
+    exportExcel: ${tempExportExcelDirectoryPath}/${tempExportExcelDirectoryName}
+    download: ${tempDownloadDirectoryPath}/${tempDownloadDirectoryName}
+    upload: ${tempUploadDirectoryPath}/${tempUploadDirectoryName}
+  uploaddir:
+    upload: ${uploadSaveDirectoryPath}/${uploadSaveDirectoryName} #上传附件永久保存目录
+    template: ${templateSaveDirectoryPath}/${templateSaveDirectoryName} #上传模板永久保存目录
+  uploadconfig: 
+    allowSize: 150028800  #允许上传的单个文件大小,50M
+    tempdirSize: 52428800000  #用户临时上传目录总大小
+  cookie: 
+    domain: ptx.com # 多域名配置(GatewayApp中使用)
+  domain: 
+    homePage: http://167d31y393.iok.la
+  reutrnExceptionStackTraceElement: true #是否开启异常推栈内容的输出
+  targetMaps:
+    ITargetSystemParms: com.spsoft.common.business.SystemParms  #解析收集的系统参数
+  user:
+    mask: ljaiEf@XY2^163^COM!a)XYQ
+  redis:
+    channel: REDIS:systemParms  #作为@SystemParms收集的参数列入redis队列的标识
+  restUsername: admin
+  restPassword: SR95WFNzAIioyOjsYHTWmg==
+
+# 此属性配置 起到移除响应头X-Application-Context
+management: 
+  add-application-context-header: false
+tms_export_excel: F:\文档
+
+

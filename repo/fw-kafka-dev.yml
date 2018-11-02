@@ -1,0 +1,15 @@
+#fw-kafka.yml
+fw:
+  kafka:
+   common:  #默认配置，当业务主题未配置common的下级属性时，采用common配置
+     brokers: 192.168.55.226:9092   #kafka地址,集群环境下使用“,”分隔
+     zk-nodes: 192.168.55.226:2181  #zookeeper地址,集群环境下使用“,”分隔
+     replicationFactor: 1           #副本数量
+     numPartitions: 2               #分区数量
+   
+   #实例数据修改时，更新标签数据的topic
+   entityLabelUpdateTopic:
+     numPartitions: 2
+   #总公司申报事项,询问和通知分公司的事项统一结束流程的topic
+   topicAlloEnd:
+     numPartitions: 2
