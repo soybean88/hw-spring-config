@@ -1,0 +1,23 @@
+﻿# 系统模块数据库
+spring: 
+ datasource: 
+  type: com.alibaba.druid.pool.DruidDataSource
+  driver-class-name: oracle.jdbc.driver.OracleDriver
+  url: jdbc:oracle:thin:@//192.168.56.253:1521/tms5db
+  username: tms_user
+  password: hwsoft
+  initialSize: 5
+  minIdle: 5
+  maxActive: 20
+  maxWait: 60000
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: SELECT 'x'
+  testWhileIdle: true 
+  testOnBorrow: false
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxPoolPreparedStatementPerConnectionSize: 20
+  # filters: stat
+  connectionProperties: druid.stat.slowSqlMillis=5000;druid.stat.mergeSql=true
+  useGlobalDataSourceStat: true
