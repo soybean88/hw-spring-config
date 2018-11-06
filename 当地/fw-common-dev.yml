@@ -1,7 +1,7 @@
 ############# redis连接配置 #########################
-redisServerHost: 192.168.55.226
-redisServerPort: 6379
-redisServerPassword: redis
+redisServerHost: 192.168.56.115
+redisServerPort: 7000
+redisServerPassword: 
 ############# 临时文件上传及下载目录配置 #############
 tempDownloadDirectoryPath: d:/tms5app/tmsc
 tempUploadDirectoryPath: d:/tms5app/tmsc
@@ -28,18 +28,18 @@ server:
     multipart:
       maxFileSize: 5000Mb
       maxRequestSize: 5000Mb
-spring: 
- redis: 
+spring:
+ redis:
   database: 0
-  host: ${redisServerHost}
-  port: ${redisServerPort}
+  cluster: #集群模式 
+   nodes: 192.168.56.115:7000
+  password:  
   timeout: 0
-  password: ${redisServerPassword}
-  pool: 
-   max-active: 8
-   max-wait: -1
-   max-idle: 8
-   min-idle: 0
+  pool:
+    max-active: 8 # Max number of connections that can be allocated by the pool at a given time. Use a negative value for no limit.
+    max-idle: 8 # Max number of "idle" connections in the pool. Use a negative value to indicate an unlimited number of idle connections.
+    max-wait: -1 # Maximum amount of time (in milliseconds) a connection allocation should block before throwing an exception when the pool is exhausted. Use a negative value to block indefinitely.
+    min-idle: 0 # Target for the minimum number of idle connections to maintain in the pool. This setting only has an effect if it is positive.
  #mongoDB 
  #FwMongo.enabled是Mongo 的配置类启动的开关
 FwMongo:
