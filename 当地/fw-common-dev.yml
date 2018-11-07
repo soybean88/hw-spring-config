@@ -31,8 +31,9 @@ server:
 spring:
  redis:
   database: 0
-  clusterNodes: 192.168.56.115:7000
-  password:  
+  cluster: #集群模式 
+    nodes: 192.168.56.115:7000
+    password: redis  
   timeout: 0
   pool:
     max-active: 8 # Max number of connections that can be allocated by the pool at a given time. Use a negative value for no limit.
