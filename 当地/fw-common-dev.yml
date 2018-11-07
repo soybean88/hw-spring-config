@@ -32,7 +32,7 @@ spring:
  redis:
   database: 0
   cluster: #集群模式 
-    url: redis://:redis@192.168.56.115:7000
+    nodes: 192.168.56.115:7000
   timeout: 15000
   url: redis://:redis@192.168.56.115:7000
   pool:
