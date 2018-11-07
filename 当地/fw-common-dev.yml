@@ -32,9 +32,10 @@ spring:
  redis:
   database: 0
   cluster: #集群模式 
-    nodes: 192.168.56.115:7000
-    password: redis  
+    url: redis://:redis@192.168.56.115:7000
+    nodes: 192.168.56.115:7000 
   timeout: 15000
+  redis://user:password@example.com:6379
   pool:
     max-active: 8 # Max number of connections that can be allocated by the pool at a given time. Use a negative value for no limit.
     max-idle: 8 # Max number of "idle" connections in the pool. Use a negative value to indicate an unlimited number of idle connections.
