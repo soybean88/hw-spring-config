@@ -1,0 +1,40 @@
+#工作流serviceTask回调业务系统域名
+activiti:
+  callback:
+    domain: http://127.0.0.1:9999
+spring: 
+ datasource: 
+  type: com.alibaba.druid.pool.DruidDataSource
+  driver-class-name: oracle.jdbc.driver.OracleDriver
+  url: jdbc:oracle:thin:@192.168.55.226:1521:tms5db   #192.168.55.225:1521:csaridb
+  username: tms_flowwork
+  password: hwsoft
+  initialSize: 5
+  minIdle: 5
+  maxActive: 20
+  maxWait: 60000
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: SELECT 'x'
+  testWhileIdle: true 
+  testOnBorrow: false
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxPoolPreparedStatementPerConnectionSize: 20
+  # filters: stat
+  connectionProperties: druid.stat.slowSqlMillis=5000;druid.stat.mergeSql=true
+  useGlobalDataSourceStat: true
+  
+  
+callback: 
+  oauthTokenUrl: http://www.ptx.com:8080/auth/oauth/token
+  oauthClientId: client_id
+  oauthClientSecret: client_secret
+  
+  notifyAuthBaseurl: http://www.ptx.com:8080
+  notifyAuthUsername: admin
+  notifyAuthPassword: 123456789
+
+fw:
+  swagger:
+    enabled: false
