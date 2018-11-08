@@ -6,7 +6,7 @@ spring:
  datasource: 
   type: com.alibaba.druid.pool.DruidDataSource
   driver-class-name: oracle.jdbc.driver.OracleDriver
-  url: jdbc:oracle:thin:@192.168.55.226:1521:tms5db   #192.168.55.225:1521:csaridb
+  url: jdbc:oracle:thin:@192.168.56.256:1521:tms5db   #192.168.55.225:1521:csaridb
   username: tms_flowwork
   password: hwsoft
   initialSize: 5
