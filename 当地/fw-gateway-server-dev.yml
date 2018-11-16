@@ -1,5 +1,5 @@
 server:
-  port: 6638
+  port: 80
   tomcat:
    # Maximum amount of worker threads.
     max-threads: 512
