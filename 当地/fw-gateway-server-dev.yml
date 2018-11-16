@@ -33,10 +33,10 @@ spring:
     name: fw-gateway-server
   redis: 
     database: 0
-    host: ${redisServerHost}
-    port: ${redisServerPort}
-    timeout: 0
-    password: ${redisServerPassword}
+    host: 192.168.56.115
+    port: 6379
+    timeout: 1500
+    password: redis
     pool: 
       max-active: 8
       max-wait: -1
