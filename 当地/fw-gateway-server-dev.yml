@@ -31,17 +31,17 @@ spring:
       file-size-threshold: 0
   application:
     name: fw-gateway-server
-  redis:
+  redis: 
     database: 0
-    cluster: #集群模式 
-      nodes: 192.168.56.115:7000,192.168.56.115:7001,192.168.56.115:7002,192.168.56.115:7003,192.168.56.115:7004,192.168.56.115:7005
-    password: redis
+    host: ${redisServerHost}
+    port: ${redisServerPort}
     timeout: 0
-    pool:
-      max-active: 8 # Max number of connections that can be allocated by the pool at a given time. Use a negative value for no limit.
-      max-idle: 8 # Max number of "idle" connections in the pool. Use a negative value to indicate an unlimited number of idle connections.
-      max-wait: -1 # Maximum amount of time (in milliseconds) a connection allocation should block before throwing an exception when the pool is exhausted. Use a negative value to block indefinitely.
-      min-idle: 0 # Target for the minimum number of idle connections to maintain in the pool. This setting only has an effect if it is positive.
+    password: ${redisServerPassword}
+    pool: 
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
 zuul:
   host:
     #适用于ApacheHttpClient，如果是okhttp无效。每个服务的http客户端连接池最大连接，默认是200.
