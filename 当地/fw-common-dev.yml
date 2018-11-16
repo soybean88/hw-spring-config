@@ -1,7 +1,7 @@
 ############# redis连接配置 #########################
 redisServerHost: 192.168.56.115
-redisServerPort: 7000
-redisServerPassword: 
+redisServerPort: 6379
+redisServerPassword: redis
 ############# 临时文件上传及下载目录配置 #############
 tempDownloadDirectoryPath: d:/tms5app/tmsc
 tempUploadDirectoryPath: d:/tms5app/tmsc
