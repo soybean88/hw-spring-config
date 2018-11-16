@@ -64,9 +64,12 @@ mybatis:
 
 eureka: 
   instance:
-    prefer-ip-address: true
+    #prefer-ip-address: true
+    hostname: discoveryconfig.spsoftcloud.com
+    nonSecurePort: 80
     lease-renewal-interval-in-seconds: 15      # 续约更新时间间隔（默认30秒）
     lease-expiration-duration-in-seconds: 60
+    
 
 # SECURITY OAUTH2 RESOURCES (ResourceServerProperties)
 # SECURITY OAUTH2 RESOURCES (ResourceServerProperties)
