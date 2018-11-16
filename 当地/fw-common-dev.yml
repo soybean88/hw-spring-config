@@ -191,7 +191,7 @@ fw:
     allowSize: 150028800  #允许上传的单个文件大小,50M
     tempdirSize: 52428800000  #用户临时上传目录总大小
   cookie: 
-    domain: ptx.com # 多域名配置(GatewayApp中使用)
+    domain: www.ptx.com # 多域名配置(GatewayApp中使用)
   domain: 
     homePage: http://167d31y393.iok.la
   reutrnExceptionStackTraceElement: true #是否开启异常推栈内容的输出
