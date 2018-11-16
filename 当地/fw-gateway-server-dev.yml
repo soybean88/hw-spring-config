@@ -149,10 +149,10 @@ zuul:
       stripPrefix: false
       serviceId: tmsc-adddeduct-server
     # 数据库日志
-    fw-log-server:
-      path: /rest/log/**
+    baddebt-sso-server:
+      path: /baddebt/sso/**
       stripPrefix: false
-      serviceId: fw-log-server  
+      serviceId: baddebt-sso-server
                                                    
 
 hystrix:
